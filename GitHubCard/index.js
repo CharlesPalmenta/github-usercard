@@ -3,7 +3,13 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+axios.get('https://api.github.com/users/CharlesPalmenta')
+.then(response => {
+  console.log(response.data)
+})
+.catch(err => {
+  console.log('something went wrong!')
+})
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,7 +55,10 @@ const followersArray = [];
       </div>
     </div>
 */
-
+const gitcardMaker = (object) => {
+  const newCard = document.createElement('div')
+  
+}
 /*
   List of LS Instructors Github username's:
     tetondan
