@@ -5,11 +5,17 @@
 */
 axios.get('https://api.github.com/users/CharlesPalmenta')
 .then(response => {
-  console.log(response.data)
+  console.log(response);
+  const gitcards = document.querySelector('.cards');
+  const gitValues = response.data;
+  const cardInfo = gitcardMaker(gitValues);
+  gitcards.appendChild(cardInfo);
+
 })
 .catch(err => {
   console.log('something went wrong!')
 })
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -34,7 +40,19 @@ axios.get('https://api.github.com/users/CharlesPalmenta')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+i = 0;
+followersArray.forEach((user, i) => {
+  axios.get(`https://api.github.com/users/${followersArray[i]}`)
+  .then(response => {
+    const gitcards = document.querySelector('.cards');
+    const gitValues = response.data;
+    const cardInfo = gitcardMaker(gitValues);
+    gitcards.appendChild(cardInfo);
+
+
+  })
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -55,10 +73,49 @@ const followersArray = [];
       </div>
     </div>
 */
-const gitcardMaker = (object) => {
+function gitcardMaker(object) {
   const newCard = document.createElement('div')
-  
+  const userImg = document.createElement('img')
+  const infoDiv = document.createElement('div')
+  const name = document.createElement('h3')
+  const userName = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const profileLink = document.createElement('a')
+  const followOne = document.createElement('p')
+  const followTwo = document.createElement('p')
+  const bio = document.createElement('p')
+
+  newCard.appendChild(userImg)
+  newCard.appendChild(infoDiv)
+  infoDiv.appendChild(name)
+  infoDiv.appendChild(userName)
+  infoDiv.appendChild(location)
+  infoDiv.appendChild(profile)
+  profile.appendChild(profileLink)
+  infoDiv.appendChild(followOne)
+  infoDiv.appendChild(followTwo)
+  infoDiv.appendChild(bio)
+
+  newCard.classList.add('card')
+  infoDiv.classList.add('card-info')
+  name.classList.add('name')
+  userName.classList.add('username')
+
+  userImg.src = object.avatar_url
+  name.textContent = object.name
+  userName.textContent = object.login
+  location.textContent = object.location
+  profileLink.textContent = object.html_url
+  followOne.textContent = object.followers
+  followTwo.textContent = object.following
+  bio.textContent = object.bio
+
+
+ 
+  return newCard
 }
+
 /*
   List of LS Instructors Github username's:
     tetondan
